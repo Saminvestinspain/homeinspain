@@ -2,11 +2,12 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-export default function Nav() {
-  const [scrolled, setScrolled] = useState(false)
+export default function Nav({ isPropertyPage = false }: { isPropertyPage?: boolean }) {
+  const [scrolled, setScrolled] = useState(isPropertyPage)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
+    if (isPropertyPage) return
     const onScroll = () => {
       const s = document.documentElement.scrollTop
       setScrolled(s > 80)
@@ -16,7 +17,7 @@ export default function Nav() {
     }
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [isPropertyPage])
 
   const logoColor = scrolled ? '#023344' : '#FAFAF8'
   const textColor = scrolled ? 'rgba(10,10,10,.6)' : 'rgba(250,250,248,.75)'
